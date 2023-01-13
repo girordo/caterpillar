@@ -26,3 +26,4 @@ caterpillar-*.tar
 /tmp/
 
 #elixir_ls
+.elixir_ls/

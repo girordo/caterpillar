@@ -1,18 +1,28 @@
 defmodule Caterpillar do
-  @moduledoc """
-  Documentation for `Caterpillar`.
-  """
+  @dir "files"
+  def get_site(url) do
+    :get
+    |> Finch.build(url)
+    |> Finch.request(DefaultFinch)
+    |> case do
+      {:ok, %{status: 200, body: body, headers: headers}} ->
+        content_type =
+          headers
+          |> Map.new()
+          |> Map.get("content-type", nil)
 
-  @doc """
-  Hello world.
+        if content_type == "text/html" do
+          save_url(url, body)
+        end
 
-  ## Examples
+      error ->
+        raise "failed #{inspect(error)}"
+    end
+  end
 
-      iex> Caterpillar.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  def save_url(url, body) do
+    File.mkdir_p!(@dir)
+    hash = :crypto.hash(:sha256, url) |> Base.encode16() |> String.downcase()
+    File.write!(Path.join(@dir, hash), body)
   end
 end
