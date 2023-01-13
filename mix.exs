@@ -22,7 +22,8 @@ defmodule Caterpillar.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:finch, "~> 0.14.0"}
+      {:finch, "~> 0.14.0"},
+      {:floki, "~> 0.34.0"}
     ]
   end
 end
