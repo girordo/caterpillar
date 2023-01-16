@@ -1,6 +1,6 @@
 defmodule Caterpillar do
   @dir "files"
-  def get_site(url) do
+  def get_url(url) do
     :get
     |> Finch.build(url)
     |> Finch.request(DefaultFinch)
